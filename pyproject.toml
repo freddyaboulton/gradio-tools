@@ -42,7 +42,7 @@ classifiers = [
 ]
 dependencies = [
     "gradio",
-    "gradio_client",
+    "gradio_client>=0.0.8",
     "langchain",
     "openai"
 ]
