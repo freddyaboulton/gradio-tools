@@ -40,7 +40,7 @@ The core abstraction is the `GradioTool`, which lets you define a new tool for y
 class GradioTool(BaseTool):
     name = "GradioTool"
     description: str
-    client: grc.Client
+    src: str
     
     @abstractmethod
     def create_job(self, query: str) -> Job:
@@ -54,7 +54,7 @@ class GradioTool(BaseTool):
 The requirements are:
 1. The name for your tool
 2. The description for your tool. This is crucial! Agents decide which tool to use based on their description. Be precise and be sure to inclue example of what the input and the output of the tool should look like.
-3. The [gradio client](https://github.com/gradio-app/gradio/blob/main/client/python/README.md) instance. Gradio Tools leverage gradio applications via API and the gradio client makes that super easy. Be sure to click the link and learn more about the gradio client library if you are not familiar with it.
+3. The url or space id, e.g. `freddyaboulton/calculator`, of the Gradio application. Based on this value, `gradio_tool` will create a [gradio client](https://github.com/gradio-app/gradio/blob/main/client/python/README.md) instance to query the upstream application via API. Be sure to click the link and learn more about the gradio client library if you are not familiar with it.
 4. create_job - Given a string, this method should parse that string and return a job from the client. Most times, this is as simple as passing the string to the `submit` function of the client. More info on creating jobs [here](https://github.com/gradio-app/gradio/blob/main/client/python/README.md#making-a-prediction)
 5. postprocess - Given the result of the job, convert it to a string the LLM can display to the user.
 
@@ -62,7 +62,7 @@ And that's it!
 
 ## Pre-built tools
 
-gradio_tool comes with a set of pre-built tools you can leverage immediately! There are
+gradio_tool comes with a set of pre-built tools you can leverage immediately! These are
 
 1. StableDiffusionTool - Generate an image from a given prompt using the open source stable diffusion demo hosted on [HuggingFace spaces](https://huggingface.co/spaces/stabilityai/stable-diffusion)
 2. ImageCaptionTool - Caption an image by providing a filepath based on Niels Rogge's [HuggingFace Space](https://huggingface.co/spaces/nielsr/comparing-captioning-models)
