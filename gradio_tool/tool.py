@@ -62,7 +62,7 @@ class StableDiffusionTool(GradioTool):
     description = ("An image generator. Use this to generate images based on "
                    "text input. Input should be a description of what the image should "
                    "look like. The output will be a path to an image file.")
-    src = "stabilityai/stable-diffusion"
+    src = "gradio-client-demos/stable-diffusion"
 
     def create_job(self, query: str) -> Job:
         return self.client.submit(query, "", 9, fn_index=1)
@@ -79,7 +79,7 @@ class ImageCaptioningTool(GradioTool):
     description = ("An image captioner. Use this to create a caption for an image. "
                    "Input will be a path to an image file. "
                    "The output will be a caption of that image. ")
-    src = "nielsr/comparing-captioning-models"
+    src = "gradio-client-demos/comparing-captioning-models"
 
     def create_job(self, query: str) -> Job:
         return self.client.submit(query.strip("'"), fn_index=0)
