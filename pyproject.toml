@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "gradio_tool"
+name = "gradio_tools"
 version = "0.0.1"
-description = "Use Gradio Apps as tools for Langchain"
+description = "Use Gradio Apps as tools for LLM Agents"
 requires-python = ">=3.9"
 license = "MIT"
 authors = [
@@ -43,6 +43,10 @@ classifiers = [
 dependencies = [
     "gradio",
     "gradio_client>=0.0.8",
-    "langchain",
     "openai"
+]
+
+[project.optional-dependencies]
+langchain = [
+    "langchain"
 ]
