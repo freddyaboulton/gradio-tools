@@ -14,6 +14,5 @@ tools = [StableDiffusionTool().langchain, ImageCaptioningTool().langchain]
 
 
 agent = initialize_agent(tools, llm, memory=memory, agent="conversational-react-description", verbose=True)
-breakpoint()
 output = agent.run(input=("I would please like a photo of a dog riding a skateboard. "
                           "Please caption this image and create a song for it."))
