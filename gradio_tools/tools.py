@@ -22,6 +22,9 @@ class GradioTool:
                         "should try this action again and never stop until you "
                         "don't see this message.")
         self._langchain = Tool(name=self.name, func=self.run, description=self.description)
+    
+    def __repr__(self) -> str:
+        return f"GradioTool(name={self.name}, src={self.src})"
 
     @abstractmethod
     def create_job(self, query: str) -> Job:
@@ -30,6 +33,12 @@ class GradioTool:
     @abstractmethod
     def postprocess(self, output: Tuple[Any]) -> str:
         pass
+
+    def block_input(self) -> gr.components.Component:
+        return gr.Textbox()
+
+    def block_output(self) -> gr.components.Component:
+        return gr.Textbox()
     
     def run(self, query: str):
         job = self.create_job(query)
@@ -43,9 +52,9 @@ class GradioTool:
             output = "QUEUE_FULL"
         return output
     
-    def block(self,):
+    def block(self):
         """Get the gradio Blocks corresponding to this tool - useful for visualization."""
-        return gr.load(self.src)
+        return gr.load(name=self.src, src="spaces")
     
     @property
     def langchain(self):
@@ -68,6 +77,12 @@ class StableDiffusionTool(GradioTool):
     
     def postprocess(self, output: Tuple[Any]) -> str:
         return [os.path.join(output, i) for i in os.listdir(output) if not i.endswith("json")][0]
+    
+    def block_input(self) -> gr.components.Component:
+        return gr.Textbox()
+    
+    def block_output(self) -> gr.components.Component:
+        return gr.Image()
 
 
 class ImageCaptioningTool(GradioTool):
@@ -85,6 +100,12 @@ class ImageCaptioningTool(GradioTool):
     
     def postprocess(self, output: Tuple[Any]) -> str:
         return output[1]
+    
+    def block_input(self) -> gr.components.Component:
+        return gr.Image()
+    
+    def block_output(self) -> gr.components.Component:
+        return gr.Textbox()
 
 
 class ImageToMusicTool(GradioTool):
@@ -101,3 +122,9 @@ class ImageToMusicTool(GradioTool):
 
     def postprocess(self, output: Tuple[Any]) -> str:
         return output[1]
+    
+    def block_input(self) -> gr.components.Component:
+        return gr.Image()
+    
+    def block_output(self) -> gr.components.Component:
+        return gr.Audio()
