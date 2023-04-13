@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling", "hatch-requirements-txt", "hatch-fancy-pypi-readme>=22.5.0"]
 build-backend = "hatchling.build"
 
 [project]
@@ -40,13 +40,17 @@ classifiers = [
     "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
     "Topic :: Internet :: WWW/HTTP",
 ]
+dynamic = ["readme"]
 dependencies = [
     "gradio",
     "gradio_client>=0.0.8",
-    "openai"
+    "openai",
+    "langchain",
 ]
 
-[project.optional-dependencies]
-langchain = [
-    "langchain"
+
+[tool.hatch.metadata.hooks.fancy-pypi-readme]
+content-type = "text/markdown"
+fragments = [
+  { path = "README.md"},
 ]
