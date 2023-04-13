@@ -1,15 +1,3 @@
-# + tags=["hide_inp"]
-
-desc = """
-### Gradio Tool
-
-Examples using the gradio tool [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/srush/MiniChain/blob/master/examples/gradio_example.ipynb)
-
-"""
-# -
-
-# $
-
 from minichain import show, prompt, OpenAI, OpenAIStream
 import gradio as gr
 from gradio_tools.tools import StableDiffusionTool, ImageCaptioningTool
@@ -24,6 +12,7 @@ def picture(model, query):
 @prompt(StableDiffusionTool(), stream=True, block_input=lambda: gr.Textbox(label=""))
 def gen(model, query):
     for r in model.stream(query):
+        # Show a blue cube while waiting.
         yield "https://htmlcolorcodes.com/assets/images/colors/baby-blue-color-solid-background-1920x1080.png"
     yield r
 
@@ -35,7 +24,13 @@ def gradio_example(query):
     return caption(gen(picture(query)))
 
 
-# $
+desc = """
+### Gradio Tool
+
+Examples using the gradio tool in Minichain. Example creates an image and then captions it.
+
+"""
+
 
 gradio = show(gradio_example,
               subprompts=[picture, gen, caption],
