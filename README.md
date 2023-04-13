@@ -1,8 +1,13 @@
-# Gradio Tool: Gradio 🤝 LangChain Agents
+# Gradio Tools: Gradio 🤝 LLM Agents
 
 Any [Gradio](https://github.com/gradio-app/gradio) application at the tips of your LLM's fingers 🦾
 
-[gradio_tool](https://github.com/freddyaboulton/gradio-tool) can turn any [Gradio](https://github.com/gradio-app/gradio) application into a [tool](https://python.langchain.com/en/latest/modules/agents/tools.html) that a [LangChain agent](https://docs.langchain.com/docs/components/agents/agent) can use to complete its task.
+[gradio_tool](https://github.com/freddyaboulton/gradio-tool) can turn any [Gradio](https://github.com/gradio-app/gradio) application into a [tool](https://python.langchain.com/en/latest/modules/agents/tools.html) that an
+LLM agent can use to complete its task.
+
+Currently supported are:
+- [LangChain agents](https://docs.langchain.com/docs/components/agents/agent) can use to complete its task.
+- [MiniChain](https://github.com/srush/MiniChain/tree/main)
 
 ## Example Usage
 
@@ -23,7 +28,7 @@ from langchain.memory import ConversationBufferMemory
 
 llm = OpenAI(temperature=0)
 memory = ConversationBufferMemory(memory_key="chat_history")
-tools = [StableDiffusionTool(), ImageCaptioningTool(), ImageToMusicTool()]
+tools = [StableDiffusionTool().langchain, ImageCaptioningTool().langchain, ImageToMusicTool().langchain]
 
 
 agent = initialize_agent(tools, llm, memory=memory, agent="conversational-react-description", verbose=True)
@@ -40,10 +45,9 @@ The core abstraction is the `GradioTool`, which lets you define a new tool for y
 
 ```python
 class GradioTool(BaseTool):
-    name = "GradioTool"
-    description: str
-    src: str
-    
+
+    def __init__(self, name: str, description: str, src: str) -> None:
+
     @abstractmethod
     def create_job(self, query: str) -> Job:
         pass
