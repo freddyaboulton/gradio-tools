@@ -53,7 +53,7 @@ class GradioTool(BaseTool):
         pass
 
     @abstractmethod
-    def postprocess(self, output: Tuple[Any]) -> str:
+    def postprocess(self, output: Tuple[Any] | Any) -> str:
         pass
 ```
 
@@ -63,6 +63,8 @@ The requirements are:
 3. The url or space id, e.g. `freddyaboulton/calculator`, of the Gradio application. Based on this value, `gradio_tool` will create a [gradio client](https://github.com/gradio-app/gradio/blob/main/client/python/README.md) instance to query the upstream application via API. Be sure to click the link and learn more about the gradio client library if you are not familiar with it.
 4. create_job - Given a string, this method should parse that string and return a job from the client. Most times, this is as simple as passing the string to the `submit` function of the client. More info on creating jobs [here](https://github.com/gradio-app/gradio/blob/main/client/python/README.md#making-a-prediction)
 5. postprocess - Given the result of the job, convert it to a string the LLM can display to the user.
+6. *Optional* - Some libraries, e.g. [MiniChain](https://github.com/srush/MiniChain/tree/main), may need some info about the underlying gradio input and output types used by the tool. By default, this will return gr.Textbox() but 
+if you'd like to provide more accurate info, implement the `_block_input(self)` and `_block_output(self)` methods of the tool.
 
 And that's it!
 
