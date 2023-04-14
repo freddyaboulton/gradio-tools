@@ -2,7 +2,7 @@ import os
 import time
 from abc import abstractmethod
 from functools import wraps
-from typing import Any, Tuple
+from typing import Any, Tuple, Union
 
 import gradio_client as grc
 from gradio_client.client import Job
@@ -50,7 +50,7 @@ class GradioTool:
         pass
 
     @abstractmethod
-    def postprocess(self, output: Tuple[Any] | Any) -> str:
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
         pass
 
     def run(self, query: str):
@@ -121,7 +121,7 @@ class StableDiffusionTool(GradioTool):
     def create_job(self, query: str) -> Job:
         return self.client.submit(query, "", 9, fn_index=1)
 
-    def postprocess(self, output: Tuple[Any] | Any) -> str:
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
         assert isinstance(output, str)
         return [
             os.path.join(output, i)
@@ -154,7 +154,7 @@ class ImageCaptioningTool(GradioTool):
     def create_job(self, query: str) -> Job:
         return self.client.submit(query.strip("'"), fn_index=0)
 
-    def postprocess(self, output: Tuple[Any] | Any) -> str:
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
         return output[1]  # type: ignore
 
     def _block_input(self) -> "gr.components.Component":
@@ -182,7 +182,7 @@ class ImageToMusicTool(GradioTool):
             query.strip("'"), 15, "medium", "loop", None, fn_index=0
         )
 
-    def postprocess(self, output: Tuple[Any] | Any) -> str:
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
         return output[1]  # type: ignore
 
     def _block_input(self) -> "gr.components.Component":
