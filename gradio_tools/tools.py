@@ -190,3 +190,99 @@ class ImageToMusicTool(GradioTool):
 
     def _block_output(self) -> "gr.components.Component":
         return gr.Audio()
+
+
+class WhisperTool(GradioTool):
+    def __init__(
+        self,
+        name="Whisper",
+        description=(
+            "A tool for transcribing audio. Use this tool to transcribe an audio file. "
+            "track from an image. Input will be a path to an audio file. "
+            "The output will the text transcript of that file."
+        ),
+        src="abidlabs/whisper-large-v2",
+    ) -> None:
+        super().__init__(name, description, src)
+
+    def create_job(self, query: str) -> Job:
+        return self.client.submit(query, api_name="/predict")
+
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
+        return output
+
+    def _block_input(self) -> "gr.components.Component":
+        return gr.Audio()
+
+    def _block_output(self) -> "gr.components.Component":
+        return gr.Textbox()
+
+
+class StableDiffusionPromptGeneratorTool(GradioTool):
+    def __init__(
+        self,
+        name="StableDiffusionPromptGenerator",
+        description=(
+            "Use this tool to improve a prompt for stable diffusion and other image generators "
+            "This tool will refine your prompt to include key words and phrases that make "
+            "stable diffusion perform better. The input is a prompt text string "
+            "and the output is a prompt text string"
+        ),
+        src="microsoft/Promptist",
+    ) -> None:
+        super().__init__(name, description, src)
+
+    def create_job(self, query: str) -> Job:
+        return self.client.submit(query, api_name="/predict")
+
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
+        return output
+
+
+class ClipInterrogatorTool(GradioTool):
+    def __init__(
+        self,
+        name="ClipInterrogator",
+        description=(
+            "A tool for reverse engineering a prompt from a source image. "
+            "Use this tool to create a prompt for StableDiffusion that matches the "
+            "input image. The imput is a path to an image. The output is a text string."
+        ),
+        src="pharma/CLIP-Interrogator",
+    ) -> None:
+        super().__init__(name, description, src)
+
+    def create_job(self, query: str) -> Job:
+        return self.client.submit(
+            query, "ViT-L (best for Stable Diffusion 1.*)", "best", fn_index=3
+        )
+
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
+        return output
+
+    def _block_input(self) -> "gr.components.Component":
+        return gr.Image()
+
+
+class TextToVideoTool(GradioTool):
+    def __init__(
+        self,
+        name="TextToVideo",
+        description=(
+            "A tool for creating videos from text."
+            "Use this tool to create videos from text prompts. "
+            "Input will be a text prompt describing a video scene. "
+            "The output will be a path to a video file."
+        ),
+        src="damo-vilab/modelscope-text-to-video-synthesis",
+    ) -> None:
+        super().__init__(name, description, src)
+
+    def create_job(self, query: str) -> Job:
+        return self.client.submit(query, -1, 16, 25, fn_index=1)
+
+    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
+        return output
+
+    def _block_output(self) -> "gr.components.Component":
+        return gr.Video()
