@@ -4,9 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gradio_tools"
-version = "0.0.2"
+version = "0.0.3"
 description = "Use Gradio Apps as tools for LLM Agents"
-requires-python = ">=3.9"
+requires-python = ">=3.8"
 license = "MIT"
 authors = [
     { name = "Freddy Boulton", email = "alfonsoboulton@gmail.com" },
@@ -26,6 +26,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
