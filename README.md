@@ -45,6 +45,7 @@ output = agent.run(input=("I would please like a photo of a dog riding a skatebo
 
 ![gradio_langchain](https://user-images.githubusercontent.com/41651716/231012932-ce989347-db21-41be-8971-ab278d689b2d.gif)
 
+See the `/examples` directory for complete code examples. 
 
 ## How it works
 
