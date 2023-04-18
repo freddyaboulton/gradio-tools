@@ -2,7 +2,7 @@
 
 There are many 1000s of [Gradio](https://github.com/gradio-app/gradio) apps on [Hugging Face Spaces](https://huggingface.co/spaces). This library puts them at the tips of your LLM's fingers 🦾
 
-Specifically, [`gradio-tools`](https://pypi.org/project/gradio-tools/) is a Python library for converting Gradio apps into [tools](https://python.langchain.com/en/latest/modules/agents/tools.html) that can be leveraged by a large language model (LLM)-based agent to complete its task. For example, an LLM could use a Gradio app to transcribe a voice recording it finds online and then summarize it for you. Or it could use a different Gradio tool to apply OCR to a document on your Google Drive and then answer questions about it.
+Specifically, [`gradio-tools`](https://pypi.org/project/gradio-tools/) is a Python library for converting Gradio apps into [tools](https://python.langchain.com/en/latest/modules/agents/tools.html) that can be leveraged by a large language model (LLM)-based agent to complete its task. For example, an LLM could use a Gradio tool to transcribe a voice recording it finds online and then summarize it for you. Or it could use a different Gradio tool to apply OCR to a document on your Google Drive and then answer questions about it.
 
 Currently supported libraries for agents are:
 - [LangChain](https://docs.langchain.com/docs/components/agents/agent)
