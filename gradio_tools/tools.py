@@ -173,8 +173,8 @@ class ImageCaptioningTool(GradioTool):
     def create_job(self, query: str) -> Job:
         return self.client.submit(query.strip("'"), "Beam Search", fn_index=0)
 
-    def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
-        return output[1]  # type: ignore
+    def postprocess(self, output: str) -> str:
+        return output # type: ignore
 
     def _block_input(self) -> "gr.components.Component":
         return gr.Image()
