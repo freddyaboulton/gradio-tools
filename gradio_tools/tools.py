@@ -165,13 +165,13 @@ class ImageCaptioningTool(GradioTool):
             "Input will be a path to an image file. "
             "The output will be a caption of that image."
         ),
-        src="gradio-client-demos/comparing-captioning-models",
+        src="taesiri/BLIP-2",
         hf_token=None,
     ) -> None:
         super().__init__(name, description, src, hf_token)
 
     def create_job(self, query: str) -> Job:
-        return self.client.submit(query.strip("'"), fn_index=0)
+        return self.client.submit(query.strip("'"), "Beam Search", fn_index=0)
 
     def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
         return output[1]  # type: ignore
@@ -221,7 +221,7 @@ class WhisperTool(GradioTool):
             "track from an image. Input will be a path to an audio file. "
             "The output will the text transcript of that file."
         ),
-        src="abidlabs/whisper-large-v2",
+        src="abidlabs/whisper",
         hf_token=None,
     ) -> None:
         super().__init__(name, description, src, hf_token)
