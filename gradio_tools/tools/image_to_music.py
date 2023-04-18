@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING, Any, Tuple, Union
 
 from gradio_client.client import Job
 
-from gradio_tools.tools import GradioTool
+from gradio_tools.tools.gradio_tool import GradioTool
 
 if TYPE_CHECKING:
     import gradio as gr
@@ -30,8 +30,8 @@ class ImageToMusicTool(GradioTool):
     def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
         return output[1]  # type: ignore
 
-    def _block_input(self) -> "gr.components.Component":
+    def _block_input(self, gr) -> "gr.components.Component":
         return gr.Image()
 
-    def _block_output(self) -> "gr.components.Component":
+    def _block_output(self, gr) -> "gr.components.Component":
         return gr.Audio()

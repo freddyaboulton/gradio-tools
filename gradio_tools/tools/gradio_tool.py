@@ -11,13 +11,6 @@ from gradio_client.client import Job
 from gradio_client.utils import QueueError
 
 try:
-    import gradio as gr
-
-    GRADIO_INSTALLED = True
-except (ModuleNotFoundError, ImportError):
-    GRADIO_INSTALLED = False
-
-try:
     import langchain as lc
 
     LANGCHAIN_INSTALLED = True
@@ -27,10 +20,17 @@ except (ModuleNotFoundError, ImportError):
 
 def raises_without_gradio(f):
     @wraps(f)
-    def _f(*args, **kwargs):
+    def _f(gr):
+        try:
+            import gradio as gr
+
+            GRADIO_INSTALLED = True
+        except (ModuleNotFoundError, ImportError):
+            GRADIO_INSTALLED = False
         if not GRADIO_INSTALLED:
             raise ModuleNotFoundError(f"gradio must be installed to call {f.__name__}")
-
+        else:
+            return f(gr)
     return _f
 
 
@@ -82,19 +82,33 @@ class GradioTool:
         return output
 
     # Optional gradio functionalities
-    def _block_input(self) -> "gr.components.Component":
+    def _block_input(self, gr) -> "gr.components.Component":
         return gr.Textbox()
 
-    def _block_output(self) -> "gr.components.Component":
+    def _block_output(self, gr) -> "gr.components.Component":
         return gr.Textbox()
 
-    @raises_without_gradio
     def block_input(self) -> "gr.components.Component":
-        return self._block_input()
+        try:
+            import gradio as gr
+            GRADIO_INSTALLED = True
+        except (ModuleNotFoundError, ImportError):
+            GRADIO_INSTALLED = False
+        if not GRADIO_INSTALLED:
+            raise ModuleNotFoundError("gradio must be installed to call block_input")
+        else:
+            return self._block_input(gr)
 
-    @raises_without_gradio
     def block_output(self) -> "gr.components.Component":
-        return self._block_output()
+        try:
+            import gradio as gr
+            GRADIO_INSTALLED = True
+        except (ModuleNotFoundError, ImportError):
+            GRADIO_INSTALLED = False
+        if not GRADIO_INSTALLED:
+            raise ModuleNotFoundError("gradio must be installed to call block_output")
+        else:
+            return self._block_output(gr)
 
     @raises_without_gradio
     def block(self):

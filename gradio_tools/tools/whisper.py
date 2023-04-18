@@ -30,8 +30,5 @@ class WhisperAudioTranscriptionTool(GradioTool):
     def postprocess(self, output: str) -> str:
         return output
 
-    def _block_input(self) -> "gr.components.Component":
+    def _block_input(self, gr) -> "gr.components.Component":
         return gr.Audio()
-
-    def _block_output(self) -> "gr.components.Component":
-        return gr.Textbox()
