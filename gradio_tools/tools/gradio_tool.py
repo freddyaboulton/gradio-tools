@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import time
 from abc import abstractmethod
-from functools import wraps
 from typing import Any, Tuple, Union
 
 import gradio_client as grc
@@ -75,6 +74,7 @@ class GradioTool:
     def block_input(self) -> "gr.components.Component":
         try:
             import gradio as gr
+
             GRADIO_INSTALLED = True
         except (ModuleNotFoundError, ImportError):
             GRADIO_INSTALLED = False
@@ -86,6 +86,7 @@ class GradioTool:
     def block_output(self) -> "gr.components.Component":
         try:
             import gradio as gr
+
             GRADIO_INSTALLED = True
         except (ModuleNotFoundError, ImportError):
             GRADIO_INSTALLED = False
