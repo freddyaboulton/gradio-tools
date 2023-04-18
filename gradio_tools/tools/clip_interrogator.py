@@ -30,5 +30,5 @@ class ClipInterrogatorTool(GradioTool):
     def postprocess(self, output: str) -> str:
         return output
 
-    def _block_input(self) -> "gr.components.Component":
+    def _block_input(self, gr) -> "gr.components.Component":
         return gr.Image()

@@ -94,9 +94,13 @@ class GradioTool:
         else:
             return self._block_output(gr)
 
-    @raises_without_gradio
     def block(self):
         """Get the gradio Blocks of this tool for visualization."""
+        try:
+            import gradio as gr
+        except (ModuleNotFoundError, ImportError):
+            raise ModuleNotFoundError("gradio must be installed to call block_output")
+
         if not self._block:
             self._block = gr.load(name=self.src, src="spaces")
         return self._block
