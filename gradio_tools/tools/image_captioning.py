@@ -32,8 +32,8 @@ class ImageCaptioningTool(GradioTool):
     def postprocess(self, output: str) -> str:
         return output  # type: ignore
 
-    def _block_input(self) -> "gr.components.Component":
+    def _block_input(self, gr) -> "gr.components.Component":
         return gr.Image()
 
-    def _block_output(self) -> "gr.components.Component":
+    def _block_output(self, gr) -> "gr.components.Component":
         return gr.Textbox()

@@ -29,5 +29,5 @@ class TextToVideoTool(GradioTool):
     def postprocess(self, output: str) -> str:
         return output
 
-    def _block_output(self) -> "gr.components.Component":
+    def _block_output(self, gr) -> "gr.components.Component":
         return gr.Video()

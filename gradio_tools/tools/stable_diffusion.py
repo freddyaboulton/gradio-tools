@@ -38,8 +38,8 @@ class StableDiffusionTool(GradioTool):
             if not i.endswith("json")
         ][0]
 
-    def _block_input(self) -> "gr.components.Component":
+    def _block_input(self, gr) -> "gr.components.Component":
         return gr.Textbox()
 
-    def _block_output(self) -> "gr.components.Component":
+    def _block_output(self, gr) -> "gr.components.Component":
         return gr.Image()
