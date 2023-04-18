@@ -18,22 +18,6 @@ except (ModuleNotFoundError, ImportError):
     LANGCHAIN_INSTALLED = False
 
 
-def raises_without_gradio(f):
-    @wraps(f)
-    def _f(gr):
-        try:
-            import gradio as gr
-
-            GRADIO_INSTALLED = True
-        except (ModuleNotFoundError, ImportError):
-            GRADIO_INSTALLED = False
-        if not GRADIO_INSTALLED:
-            raise ModuleNotFoundError(f"gradio must be installed to call {f.__name__}")
-        else:
-            return f(gr)
-    return _f
-
-
 class GradioTool:
     def __init__(
         self, name: str, description: str, src: str, hf_token: str | None = None

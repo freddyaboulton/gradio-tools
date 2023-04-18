@@ -76,7 +76,8 @@ The requirements are:
 4. create_job - Given a string, this method should parse that string and return a job from the client. Most times, this is as simple as passing the string to the `submit` function of the client. More info on creating jobs [here](https://github.com/gradio-app/gradio/blob/main/client/python/README.md#making-a-prediction)
 5. postprocess - Given the result of the job, convert it to a string the LLM can display to the user.
 6. *Optional* - Some libraries, e.g. [MiniChain](https://github.com/srush/MiniChain/tree/main), may need some info about the underlying gradio input and output types used by the tool. By default, this will return gr.Textbox() but 
-if you'd like to provide more accurate info, implement the `_block_input(self)` and `_block_output(self)` methods of the tool.
+if you'd like to provide more accurate info, implement the `_block_input(self, gr)` and `_block_output(self, gr)` methods of the tool. The `gr` variable is the gradio module (the result of `import gradio as gr`). It will be
+automatically imported by the `GradiTool` parent class and passed to the `_block_input` and `_block_output` methods.
 
 And that's it!
 
