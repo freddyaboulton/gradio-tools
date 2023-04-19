@@ -1,1 +1,18 @@
-from gradio_tools.tools import GradioTool, StableDiffusionTool, ImageCaptioningTool, ImageToMusicTool, StableDiffusionPromptGeneratorTool, WhisperTool, ClipInterrogatorTool, TextToVideoTool
+from gradio_tools.tools import (ClipInterrogatorTool, GradioTool,
+                                ImageCaptioningTool, ImageToMusicTool,
+                                StableDiffusionPromptGeneratorTool,
+                                StableDiffusionTool, TextToVideoTool,
+                                WhisperAudioTranscriptionTool,
+                                DocQueryDocumentAnsweringTool)
+
+__all__ = [
+    "GradioTool",
+    "StableDiffusionTool",
+    "ClipInterrogatorTool",
+    "ImageCaptioningTool",
+    "ImageToMusicTool",
+    "WhisperAudioTranscriptionTool",
+    "StableDiffusionPromptGeneratorTool",
+    "TextToVideoTool",
+    "DocQueryDocumentAnsweringTool"
+]

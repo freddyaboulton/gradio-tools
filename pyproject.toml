@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gradio_tools"
-version = "0.0.3"
+version = "0.0.4"
 description = "Use Gradio Apps as tools for LLM Agents"
 requires-python = ">=3.8"
 license = "MIT"
@@ -40,6 +40,7 @@ minichain = ["gradio", "minichain"]
 langchain = ["langchain", "openai"]
 all = ["gradio_tools[langchain]", "gradio_tools[minichain]"]
 test = ["ruff==0.0.260", "pyright==1.1.298", "isort >=5.0.6,<6.0.0", "black==22.6.0"]
+dev = ["gradio_tools[all]", "gradio_tools[test]"]
 
 [tool.hatch.metadata.hooks.fancy-pypi-readme]
 content-type = "text/markdown"

@@ -1,13 +1,24 @@
 # Gradio Tools: Gradio 🤝 LLM Agents
 
-Any [Gradio](https://github.com/gradio-app/gradio) application at the tips of your LLM's fingers 🦾
+There are many 1000s of [Gradio](https://github.com/gradio-app/gradio) apps on [Hugging Face Spaces](https://huggingface.co/spaces). This library puts them at the tips of your LLM's fingers 🦾
 
-[gradio_tool](https://github.com/freddyaboulton/gradio-tool) can turn any [Gradio](https://github.com/gradio-app/gradio) application into a [tool](https://python.langchain.com/en/latest/modules/agents/tools.html) that an
-LLM agent can use to complete its task.
+Specifically, [`gradio-tools`](https://pypi.org/project/gradio-tools/) is a Python library for converting Gradio apps into [tools](https://python.langchain.com/en/latest/modules/agents/tools.html) that can be leveraged by a large language model (LLM)-based agent to complete its task. For example, an LLM could use a Gradio tool to transcribe a voice recording it finds online and then summarize it for you. Or it could use a different Gradio tool to apply OCR to a document on your Google Drive and then answer questions about it.
 
-Currently supported are:
-- [LangChain agents](https://docs.langchain.com/docs/components/agents/agent) can use to complete its task.
+Currently supported libraries for agents are:
+- [LangChain](https://docs.langchain.com/docs/components/agents/agent)
 - [MiniChain](https://github.com/srush/MiniChain/tree/main)
+
+`gradio-tools` comes with a set of pre-built tools you can leverage immediately! These include:
+
+1. StableDiffusionTool - Generate an image from a given prompt using the open source stable diffusion demo hosted on [HuggingFace spaces](https://huggingface.co/spaces/stabilityai/stable-diffusion)
+2. ImageCaptionTool - Caption an image by providing a filepath based on Niels Rogge's [HuggingFace Space](https://huggingface.co/spaces/nielsr/comparing-captioning-models)
+3. ImageToMusicTool - Create an audio clip that matches the style of a given image file based on Sylvain Filoni's [HuggingFace Space](https://huggingface.co/spaces/fffiloni/img-to-music)
+4. StableDiffusionPromptGeneratorTool - Use this tool to improve a prompt for stable diffusion and other image generators based on this [HuggingFace Space](https://huggingface.co/spaces/microsoft/Promptist)
+5. TextToVideoTool - A tool for creating short videos from text. Based on this [HuggingFace Space](https://huggingface.co/spaces/damo-vilab/modelscope-text-to-video-synthesis)
+6. WhisperAudioTranscriptionTool - A tool for transcribing audio with Whisper. Based on this [HuggingFace Space](https://huggingface.co/spaces/abidlabs/whisper)
+7. ClipInterrogatorTool - A tool for reverse engineering a prompt from a source image. Based on this [HuggingFace Space](https://huggingface.co/spaces/pharma/CLIP-Interrogator")
+
+We welcome more contributions!
 
 ## Example Usage
 
@@ -38,6 +49,7 @@ output = agent.run(input=("I would please like a photo of a dog riding a skatebo
 
 ![gradio_langchain](https://user-images.githubusercontent.com/41651716/231012932-ce989347-db21-41be-8971-ab278d689b2d.gif)
 
+See the `/examples` directory for more complete code examples. 
 
 ## How it works
 
@@ -64,17 +76,12 @@ The requirements are:
 4. create_job - Given a string, this method should parse that string and return a job from the client. Most times, this is as simple as passing the string to the `submit` function of the client. More info on creating jobs [here](https://github.com/gradio-app/gradio/blob/main/client/python/README.md#making-a-prediction)
 5. postprocess - Given the result of the job, convert it to a string the LLM can display to the user.
 6. *Optional* - Some libraries, e.g. [MiniChain](https://github.com/srush/MiniChain/tree/main), may need some info about the underlying gradio input and output types used by the tool. By default, this will return gr.Textbox() but 
-if you'd like to provide more accurate info, implement the `_block_input(self)` and `_block_output(self)` methods of the tool.
+if you'd like to provide more accurate info, implement the `_block_input(self, gr)` and `_block_output(self, gr)` methods of the tool. The `gr` variable is the gradio module (the result of `import gradio as gr`). It will be
+automatically imported by the `GradiTool` parent class and passed to the `_block_input` and `_block_output` methods.
 
 And that's it!
 
-## Pre-built tools
 
-gradio_tool comes with a set of pre-built tools you can leverage immediately! These are
-
-1. StableDiffusionTool - Generate an image from a given prompt using the open source stable diffusion demo hosted on [HuggingFace spaces](https://huggingface.co/spaces/stabilityai/stable-diffusion)
-2. ImageCaptionTool - Caption an image by providing a filepath based on Niels Rogge's [HuggingFace Space](https://huggingface.co/spaces/nielsr/comparing-captioning-models)
-3. ImageToMusicTool - Create an audio clip that matches the style of a given image file based on Sylvain Filoni's [HuggingFace Space](https://huggingface.co/spaces/fffiloni/img-to-music)
 
 ## Appendix
 
