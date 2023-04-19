@@ -1,4 +1,5 @@
 from gradio_tools.tools.clip_interrogator import ClipInterrogatorTool
+from gradio_tools.tools.document_qa import DocQueryDocumentAnsweringTool
 from gradio_tools.tools.gradio_tool import GradioTool
 from gradio_tools.tools.image_captioning import ImageCaptioningTool
 from gradio_tools.tools.image_to_music import ImageToMusicTool
@@ -17,4 +18,5 @@ __all__ = [
     "WhisperAudioTranscriptionTool",
     "StableDiffusionPromptGeneratorTool",
     "TextToVideoTool",
+    "DocQueryDocumentAnsweringTool",
 ]
