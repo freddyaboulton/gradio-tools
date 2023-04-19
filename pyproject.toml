@@ -36,7 +36,7 @@ dependencies = [
     "gradio_client>=0.1.2",
 ]
 [project.optional-dependencies]
-minichain = ["gradio", "minichain"]
+minichain = ["gradio", "minichain>=0.3.3"]
 langchain = ["langchain", "openai"]
 all = ["gradio_tools[langchain]", "gradio_tools[minichain]"]
 test = ["ruff==0.0.260", "pyright==1.1.298", "isort >=5.0.6,<6.0.0", "black==22.6.0"]
