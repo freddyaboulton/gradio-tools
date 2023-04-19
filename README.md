@@ -16,7 +16,8 @@ Currently supported libraries for agents are:
 4. StableDiffusionPromptGeneratorTool - Use this tool to improve a prompt for stable diffusion and other image generators based on this [HuggingFace Space](https://huggingface.co/spaces/microsoft/Promptist)
 5. TextToVideoTool - A tool for creating short videos from text. Based on this [HuggingFace Space](https://huggingface.co/spaces/damo-vilab/modelscope-text-to-video-synthesis)
 6. WhisperAudioTranscriptionTool - A tool for transcribing audio with Whisper. Based on this [HuggingFace Space](https://huggingface.co/spaces/abidlabs/whisper)
-7. ClipInterrogatorTool - A tool for reverse engineering a prompt from a source image. Based on this [HuggingFace Space](https://huggingface.co/spaces/pharma/CLIP-Interrogator")
+7. ClipInterrogatorTool - A tool for reverse engineering a prompt from a source image. Based on this [HuggingFace Space](https://huggingface.co/spaces/pharma/CLIP-Interrogator)
+8. DocQueryDocumentAnsweringTool - A tool for answering questions about a document from the from the image of the document. Based on this [HuggingFace Space](https://huggingface.co/spaces/abidlabs/docquery)
 
 We welcome more contributions!
 
