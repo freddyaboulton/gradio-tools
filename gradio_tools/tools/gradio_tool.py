@@ -74,6 +74,7 @@ class GradioTool:
     def block_input(self) -> "gr.components.Component":
         try:
             import gradio as gr
+
             GRADIO_INSTALLED = True
         except (ModuleNotFoundError, ImportError):
             GRADIO_INSTALLED = False
@@ -85,6 +86,7 @@ class GradioTool:
     def block_output(self) -> "gr.components.Component":
         try:
             import gradio as gr
+
             GRADIO_INSTALLED = True
         except (ModuleNotFoundError, ImportError):
             GRADIO_INSTALLED = False

@@ -26,8 +26,7 @@ class DocQueryDocumentAnsweringTool(GradioTool):
         return self.client.submit(img.strip(), question.strip(), api_name="/predict")
 
     def postprocess(self, output: str) -> str:
-        return output    
-    
+        return output
+
     def _block_input(self, gr) -> "gr.components.Component":
         return gr.Image()
-    
