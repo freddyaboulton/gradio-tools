@@ -20,3 +20,4 @@ agent = initialize_agent(tools, llm, memory=memory, agent="conversational-react-
 output = agent.run(input=f"What is the date of birth the driver in {IMG_PATH}?")
 output = agent.run(input=f"What is the current date?")
 output = agent.run(input=f"Using the current date, what is the age of the driver? Explain your reasoning.")
+output = agent.run(input=f"What is the driver's license number?")
