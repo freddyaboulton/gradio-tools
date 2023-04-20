@@ -25,7 +25,7 @@ We welcome more contributions!
 
 Simply import the desired tools from `gradio_tool` (or create your own!) and pass to `initialize_agent` from LangChain.
 
-In this example, we use some pre-built tools to generate images, caption them, and create a videos!
+In this example, we use some pre-built tools to generate images, caption them, and create a video!
 
 Read the [How It Works](#how-it-works) section to learn how to create your own tools! We welcome any new tools to the library!
 
@@ -37,8 +37,8 @@ if not os.getenv("OPENAI_API_KEY"):
 
 from langchain.agents import initialize_agent
 from langchain.llms import OpenAI
-from gradio_tools.tools import (StableDiffusionTool, ImageCaptioningTool, StableDiffusionPromptGeneratorTool,
-                                TextToVideoTool)
+from gradio_tools import (StableDiffusionTool, ImageCaptioningTool, StableDiffusionPromptGeneratorTool,
+                          TextToVideoTool)
 
 from langchain.memory import ConversationBufferMemory
 
@@ -54,11 +54,7 @@ output = agent.run(input=("Please create a photo of a dog riding a skateboard "
                           "Please caption the generated image and create a video for it using the improved prompt."))
 ```
 
-
-
 https://user-images.githubusercontent.com/41651716/233391796-49c3f762-bd58-41d7-b399-629e3c1661b2.mp4
-
-
 
 
 See the `/examples` directory for more complete code examples. 
