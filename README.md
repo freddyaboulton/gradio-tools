@@ -30,20 +30,16 @@ In this example, we use some pre-built tools to generate images, caption them, a
 Read the [How It Works](#how-it-works) section to learn how to create your own tools! We welcome any new tools to the library!
 
 ```python
-import os
-
-if not os.getenv("OPENAI_API_KEY"):
-    raise ValueError("OPENAI_API_KEY must be set")
-
-from langchain.agents import initialize_agent
-from langchain.llms import OpenAI
 from gradio_tools import (StableDiffusionTool, ImageCaptioningTool, StableDiffusionPromptGeneratorTool,
                           TextToVideoTool)
 
+from langchain.agents import initialize_agent
+from langchain.llms import OpenAI
 from langchain.memory import ConversationBufferMemory
 
 llm = OpenAI(temperature=0)
 memory = ConversationBufferMemory(memory_key="chat_history")
+
 tools = [StableDiffusionTool().langchain, ImageCaptioningTool().langchain,
          StableDiffusionPromptGeneratorTool().langchain, TextToVideoTool().langchain]
 
