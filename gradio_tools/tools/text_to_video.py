@@ -20,8 +20,9 @@ class TextToVideoTool(GradioTool):
         ),
         src="damo-vilab/modelscope-text-to-video-synthesis",
         hf_token=None,
+        duplicate=False,
     ) -> None:
-        super().__init__(name, description, src, hf_token)
+        super().__init__(name, description, src, hf_token, duplicate)
 
     def create_job(self, query: str) -> Job:
         return self.client.submit(query, -1, 16, 25, fn_index=1)

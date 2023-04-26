@@ -23,8 +23,9 @@ class ImageCaptioningTool(GradioTool):
         ),
         src="taesiri/BLIP-2",
         hf_token=None,
+        duplicate=True,
     ) -> None:
-        super().__init__(name, description, src, hf_token)
+        super().__init__(name, description, src, hf_token, duplicate)
 
     def create_job(self, query: str) -> Job:
         return self.client.submit(query.strip("'"), "Beam Search", fn_index=0)

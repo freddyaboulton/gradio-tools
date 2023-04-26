@@ -1,4 +1,4 @@
-from gradio_tools.tools import (ClipInterrogatorTool,
+from gradio_tools.tools import (BarkTextToSpeechTool, ClipInterrogatorTool,
                                 DocQueryDocumentAnsweringTool, GradioTool,
                                 ImageCaptioningTool, ImageToMusicTool,
                                 StableDiffusionPromptGeneratorTool,
@@ -15,4 +15,5 @@ __all__ = [
     "StableDiffusionPromptGeneratorTool",
     "TextToVideoTool",
     "DocQueryDocumentAnsweringTool",
+    "BarkTextToSpeechTool",
 ]
