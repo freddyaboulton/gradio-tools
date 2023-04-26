@@ -19,16 +19,21 @@ except (ModuleNotFoundError, ImportError):
 
 class GradioTool:
     def __init__(
-        self, name: str, description: str, src: str, hf_token: str | None = None
+        self,
+        name: str,
+        description: str,
+        src: str,
+        hf_token: str | None = None,
+        duplicate: bool = True,
     ) -> None:
         self.name = name
         self.description = description
-        if hf_token and self._is_space(src):
+        if hf_token and self._is_space(src) and duplicate:
             self.client = grc.Client.duplicate(from_id=src, hf_token=hf_token)
             self.src = self.client.space_id
         else:
             self.src = src
-            self.client = grc.Client(self.src)
+            self.client = grc.Client(self.src, hf_token=hf_token)
         self.description += (
             "If the output is the string QUEUE_FULL you "
             "should try this action again and never stop until you "

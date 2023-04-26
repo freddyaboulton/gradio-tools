@@ -18,6 +18,7 @@ Currently supported libraries for agents are:
 6. WhisperAudioTranscriptionTool - A tool for transcribing audio with Whisper. Based on this [HuggingFace Space](https://huggingface.co/spaces/abidlabs/whisper)
 7. ClipInterrogatorTool - A tool for reverse engineering a prompt from a source image. Based on this [HuggingFace Space](https://huggingface.co/spaces/pharma/CLIP-Interrogator)
 8. DocQueryDocumentAnsweringTool - A tool for answering questions about a document from the from the image of the document. Based on this [HuggingFace Space](https://huggingface.co/spaces/abidlabs/docquery)
+9. BarkTextToSpeechTool - A tool for text-to-speech. Based on this [HuggingFace Space](https://huggingface.co/spaces/suno/bark)
 
 We welcome more contributions!
 

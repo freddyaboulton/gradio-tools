@@ -19,8 +19,9 @@ class ClipInterrogatorTool(GradioTool):
         ),
         src="pharma/CLIP-Interrogator",
         hf_token=None,
+        duplicate=True,
     ) -> None:
-        super().__init__(name, description, src, hf_token)
+        super().__init__(name, description, src, hf_token, duplicate)
 
     def create_job(self, query: str) -> Job:
         return self.client.submit(

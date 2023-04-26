@@ -24,8 +24,9 @@ class StableDiffusionTool(GradioTool):
         ),
         src="gradio-client-demos/stable-diffusion",
         hf_token=None,
+        duplicate=False,
     ) -> None:
-        super().__init__(name, description, src, hf_token)
+        super().__init__(name, description, src, hf_token, duplicate)
 
     def create_job(self, query: str) -> Job:
         return self.client.submit(query, "", 9, fn_index=1)
