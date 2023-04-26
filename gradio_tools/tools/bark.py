@@ -55,7 +55,7 @@ class BarkTextToSpeechTool(GradioTool):
             f"Additionally, you can include the following non speech tokens: {NON_SPEECH_TOKENS}"
             "The output will the text transcript of that file."
         ),
-        src="gradio-client-demos/bark",
+        src="suno/bark",
         hf_token=None,
     ) -> None:
         super().__init__(name, description, src, hf_token)

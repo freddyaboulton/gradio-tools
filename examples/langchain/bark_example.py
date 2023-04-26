@@ -11,7 +11,7 @@ from langchain.memory import ConversationBufferMemory
 
 llm = OpenAI(temperature=0)
 memory = ConversationBufferMemory(memory_key="chat_history")
-tools = [BarkTextToSpeechTool(hf_token="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").langchain,
+tools = [BarkTextToSpeechTool().langchain,
          StableDiffusionTool().langchain,
          StableDiffusionPromptGeneratorTool().langchain]
 
