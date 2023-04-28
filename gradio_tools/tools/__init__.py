@@ -9,6 +9,7 @@ from gradio_tools.tools.prompt_generator import \
 from gradio_tools.tools.stable_diffusion import StableDiffusionTool
 from gradio_tools.tools.text_to_video import TextToVideoTool
 from gradio_tools.tools.whisper import WhisperAudioTranscriptionTool
+from gradio_tools.tools.sam_with_clip import SAMImageSegmentationTool
 
 __all__ = [
     "GradioTool",
@@ -21,4 +22,5 @@ __all__ = [
     "TextToVideoTool",
     "DocQueryDocumentAnsweringTool",
     "BarkTextToSpeechTool",
+    "SAMImageSegmentationTool"
 ]

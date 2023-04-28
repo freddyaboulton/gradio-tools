@@ -3,7 +3,8 @@ from gradio_tools.tools import (BarkTextToSpeechTool, ClipInterrogatorTool,
                                 ImageCaptioningTool, ImageToMusicTool,
                                 StableDiffusionPromptGeneratorTool,
                                 StableDiffusionTool, TextToVideoTool,
-                                WhisperAudioTranscriptionTool)
+                                WhisperAudioTranscriptionTool,
+                                SAMImageSegmentationTool)
 
 __all__ = [
     "GradioTool",
@@ -16,4 +17,5 @@ __all__ = [
     "TextToVideoTool",
     "DocQueryDocumentAnsweringTool",
     "BarkTextToSpeechTool",
+    "SAMImageSegmentationTool"
 ]
