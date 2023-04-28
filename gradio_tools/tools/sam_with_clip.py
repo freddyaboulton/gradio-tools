@@ -35,11 +35,15 @@ class SAMImageSegmentationTool(GradioTool):
         super().__init__(name, description, src, hf_token, duplicate)
 
     def create_job(self, query: str) -> Job:
-        image, query, predicted_iou_threshold, stability_score_threshold, clip_threshold = query.split("|")
+        try:
+            image, query, predicted_iou_threshold, stability_score_threshold, clip_threshold = query.split("|")
+        except ValueError as e:
+            raise ValueError("Not enough arguments passed to the SAMImageSegmentationTool! " 
+                             "Expected 5 (image, query, predicted_iou_threshold, stability_score_threshold, clip_threshold)") from e
         return self.client.submit(float(predicted_iou_threshold),
                                   float(stability_score_threshold),
                                   float(clip_threshold),
-                                  image, query, api_name="/predict")
+                                  image, query.strip(), api_name="/predict")
 
     def postprocess(self, output: str) -> str:
         return output
