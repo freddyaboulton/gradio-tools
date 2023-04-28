@@ -38,6 +38,7 @@ dependencies = [
 [project.optional-dependencies]
 minichain = ["gradio", "minichain>=0.3.3"]
 langchain = ["langchain", "openai"]
+plugins = ["fastapi", "huggingface_hub"]
 all = ["gradio_tools[langchain]", "gradio_tools[minichain]"]
 test = ["ruff==0.0.260", "pyright==1.1.298", "isort >=5.0.6,<6.0.0", "black==22.6.0", "pytest"]
 dev = ["gradio_tools[all]", "gradio_tools[test]"]

@@ -1,4 +1,5 @@
 from __future__ import annotations
+import json
 
 import time
 from abc import abstractmethod
@@ -8,6 +9,8 @@ import gradio_client as grc
 import huggingface_hub
 from gradio_client.client import Job
 from gradio_client.utils import QueueError
+from gradio_tools.plugins.utils import make_manifest
+from pathlib import Path
 
 try:
     import langchain as lc
@@ -124,3 +127,23 @@ class GradioTool:
 
     def __repr__(self) -> str:
         return f"GradioTool(name={self.name}, src={self.src})"
+
+    def create_plugin(self, version: str, private: bool, email: str) -> str:
+        tool_code = f"{self.__class__.__name__}(src='{self.src}', hf_token={self.client.hf_token})"
+        plugin_json = make_manifest(tool=self,
+                                    version=version,
+                                    private=private,
+                                    email=email)
+        app_file = open(str(Path(__file__).parent / '..' / "plugins" / "app.py")).read()
+        app_file = app_file.replace("<<tool-name>>", self.__class__.__name__)
+        app_file = app_file.replace("<<Insert Tool Here>>", tool_code.strip('"'))
+        app_file = app_file.replace("<<Insert JSON Here>>", str(plugin_json).strip('"'))
+        return app_file
+
+    def deploy_plugin(self,
+        org_name: str | None = None,
+        version: str | None = None,
+        hf_token: str | None = None,
+        private: bool = True,
+        email: str | None = None):
+        pass
