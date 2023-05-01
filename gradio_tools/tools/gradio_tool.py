@@ -7,10 +7,14 @@ from typing import Any, Tuple, Union
 
 import gradio_client as grc
 import huggingface_hub
+from huggingface_hub import CommitOperationAdd
 from gradio_client.client import Job
 from gradio_client.utils import QueueError
 from gradio_tools.plugins.utils import make_manifest
 from pathlib import Path
+import pprint
+import requests
+import tempfile
 
 try:
     import langchain as lc
@@ -137,13 +141,64 @@ class GradioTool:
         app_file = open(str(Path(__file__).parent / '..' / "plugins" / "app.py")).read()
         app_file = app_file.replace("<<tool-name>>", self.__class__.__name__)
         app_file = app_file.replace("<<Insert Tool Here>>", tool_code.strip('"'))
-        app_file = app_file.replace("<<Insert JSON Here>>", str(plugin_json).strip('"'))
+        app_file = app_file.replace("<<Insert JSON Here>>", pprint.pformat(plugin_json, indent=2))
         return app_file
 
     def deploy_plugin(self,
         org_name: str | None = None,
-        version: str | None = None,
+        version: str = "v1",
         hf_token: str | None = None,
         private: bool = True,
         email: str | None = None):
-        pass
+        
+        api = huggingface_hub.HfApi()
+
+        if not hf_token:
+            try:
+                author = huggingface_hub.whoami()["name"]
+            except OSError as e:
+                raise ValueError(
+                    "In order to push to hub, log in via `huggingface-cli login` "
+                    "or provide a theme_token to push_to_hub. For more information "
+                    "see https://huggingface.co/docs/huggingface_hub/quick-start#login"
+                ) from e
+        else:
+            author = huggingface_hub.whoami(token=hf_token)["name"]
+
+        space_id = f"{org_name or author}/{self.name}-{version}"
+
+        app_file_contents = self.create_plugin(version, private, email)
+
+        with tempfile.NamedTemporaryFile(mode="w", delete=False) as app_file:
+            app_file.write(app_file_contents)
+        
+        with tempfile.NamedTemporaryFile(mode="w", delete=False) as requirements:
+            requirements.write("\n".join(["gradio-tools", "fastapi"]))
+
+        operations = [
+            CommitOperationAdd(
+                path_in_repo="logo.svg", path_or_fileobj=Path(__file__).parent / '..' / "plugins" / "logo.svg"
+            ),
+            CommitOperationAdd(path_in_repo="app.py", path_or_fileobj=app_file.name),
+            CommitOperationAdd(path_in_repo="requirements.txt", path_or_fileobj=requirements.name),
+        ]
+
+        huggingface_hub.create_repo(
+            space_id,
+            repo_type="space",
+            space_sdk="gradio",
+            token=hf_token,
+            exist_ok=True,
+            private=private,
+        )
+
+        api.create_commit(
+            repo_id=space_id,
+            commit_message="Deploy Plugin",
+            repo_type="space",
+            operations=operations,
+            token=hf_token,
+        )
+        url = f"https://huggingface.co/spaces/{space_id}"
+        print(f"See your plugin here! {url}")
+        return url

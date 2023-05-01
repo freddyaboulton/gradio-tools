@@ -1,12 +1,15 @@
-from fastapi import FastAPI
-from fastapi.responses import Response, JSONResponse, HTMLResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import Response, JSONResponse, HTMLResponse, FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 import functools
 import io
 import yaml
 import uvicorn
 from pydantic import BaseModel
 from gradio_tools import <<tool-name>>
-
+import pathlib
+import urllib.parse
+import json
 
 tool = <<Insert Tool Here>>
 
@@ -16,6 +19,19 @@ class PostBody(BaseModel):
     query: str
 
 app = FastAPI()
+
+
+def get_url(request: Request):
+    port = f":{request.url.port}" if request.url.port else ""
+    return f"{request.url.scheme}://{request.url.hostname}{port}"
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")
@@ -37,13 +53,34 @@ def read_openapi_yaml() -> Response:
 
 
 @app.get("/.well-known/ai-plugin.json")
-def ai_plugin(name: str) -> JSONResponse:
-    return JSONResponse(plugin_json)
+@functools.lru_cache()
+def ai_plugin(request: Request) -> JSONResponse:
+    plugin = json.loads(json.dumps(plugin_json).replace("<<insert-url-here>>", get_url(request)))
+    return JSONResponse(plugin)
 
 
 @app.post("/predict")
-def predict(body: PostBody) -> JSONResponse:
-    return JSONResponse({"output": tool.run(body.query)})
+def predict(body: PostBody, request: Request) -> JSONResponse:
+    output = tool.run(body.query)
+    if isinstance(output, str) and pathlib.Path(output).is_file():
+        output = urllib.parse.urljoin(get_url(request), f"file={output}")
+    return JSONResponse({"output": output})
 
+
+@app.get("/file={path_or_url:path}")
+async def file(path_or_url: str):
+
+    path = pathlib.Path(path_or_url)
+
+    if path.is_absolute():
+        abs_path = path
+    else:
+        abs_path = path.resolve()
+
+    if not abs_path.exists():
+        raise HTTPException(404, "File not found")
+    if abs_path.is_dir():
+        raise HTTPException(403)
+    return FileResponse(abs_path, headers={"Accept-Ranges": "bytes"})
 
 uvicorn.run(app, host="0.0.0.0", port=7860)

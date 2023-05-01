@@ -20,10 +20,10 @@ def make_manifest(tool: 'GradioTool', version: str, private: bool, email: str):
         "auth": auth,
         "api": {
             "type": "openapi",
-            "url": "<<insert-url-here>>/openapi.json",
+            "url": "<<insert-url-here>>/openapi.yaml",
             "is_user_authenticated": False
         },
-        "logo_url": "<<insert-url-here>>/favicon.ico",
+        "logo_url": "<<insert-url-here>>/file=logo.svg",
         "contact_email": email,
         "legal_info_url": "<<insert-url-here>>"
     }
