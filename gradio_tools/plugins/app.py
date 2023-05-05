@@ -10,6 +10,7 @@ from gradio_tools import <<tool-name>>
 import pathlib
 import urllib.parse
 import json
+import os
 
 tool = <<Insert Tool Here>>
 
@@ -20,10 +21,11 @@ class PostBody(BaseModel):
 
 app = FastAPI()
 
+is_spaces = os.getenv("SYSTEM") == "spaces"
 
 def get_url(request: Request):
     port = f":{request.url.port}" if request.url.port else ""
-    return f"{request.url.scheme}://{request.url.hostname}{port}"
+    return f"{'https' if is_spaces else request.url.scheme}://{request.url.hostname}{port}"
 
 
 app.add_middleware(
@@ -36,11 +38,7 @@ app.add_middleware(
 
 @app.get("/")
 def landing_page():
-    return HTMLResponse(
-        """
-        <p>Just a bot to sync data from diffusers gallery please go to
-    <a href="https://huggingface.co/spaces/huggingface-projects/diffusers-gallery" target="_blank" rel="noopener noreferrer">https://huggingface.co/spaces/huggingface-projects/diffusers-gallery</a>
-    </p>""")
+    return HTMLResponse(f"""<p>ChatGPT Plugin for {tool}</p>""")
 
 
 @app.get('/openapi.yaml', include_in_schema=False)
