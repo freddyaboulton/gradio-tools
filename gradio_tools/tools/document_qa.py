@@ -1,9 +1,8 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from gradio_client.client import Job
 
 from gradio_tools.tools.gradio_tool import GradioTool
-from typing import List
 
 if TYPE_CHECKING:
     import gradio as gr

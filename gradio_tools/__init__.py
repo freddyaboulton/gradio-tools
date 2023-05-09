@@ -1,10 +1,10 @@
 from gradio_tools.tools import (BarkTextToSpeechTool, ClipInterrogatorTool,
                                 DocQueryDocumentAnsweringTool, GradioTool,
                                 ImageCaptioningTool, ImageToMusicTool,
+                                SAMImageSegmentationTool,
                                 StableDiffusionPromptGeneratorTool,
                                 StableDiffusionTool, TextToVideoTool,
-                                WhisperAudioTranscriptionTool,
-                                SAMImageSegmentationTool)
+                                WhisperAudioTranscriptionTool)
 
 __all__ = [
     "GradioTool",
@@ -17,5 +17,5 @@ __all__ = [
     "TextToVideoTool",
     "DocQueryDocumentAnsweringTool",
     "BarkTextToSpeechTool",
-    "SAMImageSegmentationTool"
+    "SAMImageSegmentationTool",
 ]

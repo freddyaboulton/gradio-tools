@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Tuple, Union, List
+from typing import TYPE_CHECKING, Any, List, Tuple, Union
 
 from gradio_client.client import Job
 

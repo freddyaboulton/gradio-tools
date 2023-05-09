@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import time
 from abc import abstractmethod
-from typing import Any, Tuple, Union, List
+from typing import Any, List, Tuple, Union
 
 import gradio_client as grc
 import huggingface_hub

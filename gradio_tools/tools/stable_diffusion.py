@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from typing import TYPE_CHECKING, Any, Tuple, List
+from typing import TYPE_CHECKING, Any, List, Tuple
 
 from gradio_client.client import Job
 
