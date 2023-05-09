@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import time
 from abc import abstractmethod
-from typing import Any, Tuple, Union
+from typing import Any, Tuple, Union, List
 
 import gradio_client as grc
 import huggingface_hub
@@ -70,13 +70,13 @@ class GradioTool:
         return output
 
     # Optional gradio functionalities
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Textbox()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Textbox()]
 
-    def _block_output(self, gr) -> "gr.components.Component":
-        return gr.Textbox()
+    def _block_output(self, gr) -> List["gr.components.Component"]:
+        return [gr.Textbox()]
 
-    def block_input(self) -> "gr.components.Component":
+    def block_input(self) -> List["gr.components.Component"]:
         try:
             import gradio as gr
 
@@ -88,7 +88,7 @@ class GradioTool:
         else:
             return self._block_input(gr)
 
-    def block_output(self) -> "gr.components.Component":
+    def block_output(self) -> List["gr.components.Component"]:
         try:
             import gradio as gr
 

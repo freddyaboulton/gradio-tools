@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from typing import TYPE_CHECKING, Any, Tuple
+from typing import TYPE_CHECKING, Any, Tuple, List
 
 from gradio_client.client import Job
 
@@ -39,8 +39,8 @@ class StableDiffusionTool(GradioTool):
             if not i.endswith("json")
         ][0]
 
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Textbox()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Textbox()]
 
-    def _block_output(self, gr) -> "gr.components.Component":
-        return gr.Image()
+    def _block_output(self, gr) -> List["gr.components.Component"]:
+        return [gr.Image()]

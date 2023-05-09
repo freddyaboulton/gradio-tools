@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Tuple, Union
+from typing import TYPE_CHECKING, Any, Tuple, Union, List
 
 from gradio_client.client import Job
 
@@ -31,8 +31,8 @@ class ImageToMusicTool(GradioTool):
     def postprocess(self, output: Union[Tuple[Any], Any]) -> str:
         return output[1]  # type: ignore
 
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Image()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Image()]
 
-    def _block_output(self, gr) -> "gr.components.Component":
-        return gr.Audio()
+    def _block_output(self, gr) -> List["gr.components.Component"]:
+        return [gr.Audio()]
