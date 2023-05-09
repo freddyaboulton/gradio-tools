@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from gradio_client.client import Job
 
@@ -21,7 +21,7 @@ class ImageCaptioningTool(GradioTool):
             "Input will be a path to an image file. "
             "The output will be a caption of that image."
         ),
-        src="taesiri/BLIP-2",
+        src="gradio-client-demos/BLIP-2",
         hf_token=None,
         duplicate=True,
     ) -> None:
@@ -33,8 +33,8 @@ class ImageCaptioningTool(GradioTool):
     def postprocess(self, output: str) -> str:
         return output  # type: ignore
 
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Image()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Image()]
 
-    def _block_output(self, gr) -> "gr.components.Component":
-        return gr.Textbox()
+    def _block_output(self, gr) -> List["gr.components.Component"]:
+        return [gr.Textbox()]

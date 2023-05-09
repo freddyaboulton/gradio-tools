@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from gradio_client.client import Job
 
@@ -8,7 +8,6 @@ from gradio_tools.tools.gradio_tool import GradioTool
 
 if TYPE_CHECKING:
     import gradio as gr
-
 
 
 class SAMImageSegmentationTool(GradioTool):
@@ -36,20 +35,32 @@ class SAMImageSegmentationTool(GradioTool):
 
     def create_job(self, query: str) -> Job:
         try:
-            image, query, predicted_iou_threshold, stability_score_threshold, clip_threshold = query.split("|")
+            (
+                image,
+                query,
+                predicted_iou_threshold,
+                stability_score_threshold,
+                clip_threshold,
+            ) = query.split("|")
         except ValueError as e:
-            raise ValueError("Not enough arguments passed to the SAMImageSegmentationTool! " 
-                             "Expected 5 (image, query, predicted_iou_threshold, stability_score_threshold, clip_threshold)") from e
-        return self.client.submit(float(predicted_iou_threshold),
-                                  float(stability_score_threshold),
-                                  float(clip_threshold),
-                                  image, query.strip(), api_name="/predict")
+            raise ValueError(
+                "Not enough arguments passed to the SAMImageSegmentationTool! "
+                "Expected 5 (image, query, predicted_iou_threshold, stability_score_threshold, clip_threshold)"
+            ) from e
+        return self.client.submit(
+            float(predicted_iou_threshold),
+            float(stability_score_threshold),
+            float(clip_threshold),
+            image,
+            query.strip(),
+            api_name="/predict",
+        )
 
     def postprocess(self, output: str) -> str:
         return output
 
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Textbox()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Number(), gr.Number(), gr.Number(), gr.Image(), gr.Textbox()]
 
-    def _block_output(self, gr) -> "gr.components.Component":
-        return gr.Audio()
+    def _block_output(self, gr) -> List["gr.components.Component"]:
+        return [gr.Image()]

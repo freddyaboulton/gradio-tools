@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from gradio_client.client import Job
 
@@ -31,5 +31,5 @@ class ClipInterrogatorTool(GradioTool):
     def postprocess(self, output: str) -> str:
         return output
 
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Image()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Image()]

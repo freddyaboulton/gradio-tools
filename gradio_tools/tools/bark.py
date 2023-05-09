@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from gradio_client.client import Job
 
@@ -80,8 +80,8 @@ class BarkTextToSpeechTool(GradioTool):
     def postprocess(self, output: str) -> str:
         return output
 
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Textbox()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Textbox()]
 
-    def _block_output(self, gr) -> "gr.components.Component":
-        return gr.Audio()
+    def _block_output(self, gr) -> List["gr.components.Component"]:
+        return [gr.Audio()]

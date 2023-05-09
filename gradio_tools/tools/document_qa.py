@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 from gradio_client.client import Job
 
@@ -13,7 +13,7 @@ class DocQueryDocumentAnsweringTool(GradioTool):
         self,
         name="DocQuery",
         description=(
-            "A tool for answering questions about a document from the from the image of the document. Input will be a two strings separated by a comma: the first will be the path or URL to an image of a document. The second will be your question about the document."
+            "A tool for answering questions about a document from the from the image of the document. Input will be a two strings separated by a |: the first will be the path or URL to an image of a document. The second will be your question about the document."
             "The output will the text answer to your question."
         ),
         src="abidlabs/docquery",
@@ -23,11 +23,11 @@ class DocQueryDocumentAnsweringTool(GradioTool):
         super().__init__(name, description, src, hf_token, duplicate)
 
     def create_job(self, query: str) -> Job:
-        img, question = query.split(",")
+        img, question = query.split("|")
         return self.client.submit(img.strip(), question.strip(), api_name="/predict")
 
     def postprocess(self, output: str) -> str:
         return output
 
-    def _block_input(self, gr) -> "gr.components.Component":
-        return gr.Image()
+    def _block_input(self, gr) -> List["gr.components.Component"]:
+        return [gr.Image(), gr.Textbox()]
