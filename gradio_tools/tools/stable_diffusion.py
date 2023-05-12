@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-import os
-from typing import TYPE_CHECKING, Any, List, Tuple
+from typing import TYPE_CHECKING, List
 
 from gradio_client.client import Job
 
@@ -22,22 +21,17 @@ class StableDiffusionTool(GradioTool):
             "text input. Input should be a description of what the image should "
             "look like. The output will be a path to an image file."
         ),
-        src="gradio-client-demos/stable-diffusion",
+        src="gradio-client-demos/text-to-image",
         hf_token=None,
         duplicate=False,
     ) -> None:
         super().__init__(name, description, src, hf_token, duplicate)
 
     def create_job(self, query: str) -> Job:
-        return self.client.submit(query, "", 9, fn_index=1)
+        return self.client.submit(query, api_name="/predict")
 
-    def postprocess(self, output: Tuple[Any] | Any) -> str:
-        assert isinstance(output, str)
-        return [
-            os.path.join(output, i)
-            for i in os.listdir(output)
-            if not i.endswith("json")
-        ][0]
+    def postprocess(self, output: str) -> str:
+        return output
 
     def _block_input(self, gr) -> List["gr.components.Component"]:
         return [gr.Textbox()]
